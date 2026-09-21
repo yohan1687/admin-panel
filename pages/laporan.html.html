@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#f6faff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-high": "#e1e9f1", "on-background": "#151d22", "surface": "#f6faff", "surface-container-lowest": "#ffffff", "on-secondary": "#ffffff", "primary": "#004328", "on-primary-container": "#8ad2a7", "error-container": "#ffdad6", "tertiary-fixed-dim": "#aecebe", "outline": "#707971", "on-surface-variant": "#404942", "on-error": "#ffffff", "on-primary-fixed-variant": "#005232", "on-tertiary-fixed-variant": "#304c41", "on-primary": "#ffffff", "secondary-fixed": "#ffdeae", "inverse-primary": "#8ed6aa", "surface-tint": "#226b47", "inverse-surface": "#293138", "tertiary": "#233f34", "primary-container": "#0d5c3a", "error": "#ba1a1a", "primary-fixed": "#a9f3c5", "surface-container-low": "#ecf5fd", "surface-variant": "#dbe3ec", "on-error-container": "#93000a", "on-tertiary-fixed": "#032017", "secondary-fixed-dim": "#fdba45", "on-secondary-fixed-variant": "#604100", "tertiary-container": "#3a564a", "on-surface": "#151d22", "background": "#f6faff", "on-primary-fixed": "#002111", "secondary-container": "#fdba45", "outline-variant": "#bfc9c0", "on-tertiary-container": "#abcabb", "on-secondary-container": "#6f4b00", "tertiary-fixed": "#caeada", "inverse-on-surface": "#eaf2fa", "on-tertiary": "#ffffff", "surface-bright": "#f6faff", "surface-container-highest": "#dbe3ec", "secondary": "#7f5700", "surface-container": "#e7eff7", "primary-fixed-dim": "#8ed6aa", "surface-dim": "#d3dbe3", "on-secondary-fixed": "#281900" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter": "1rem", "space-xs": "0.25rem", "space-md": "1rem", "space-xl": "2rem", "space-sm": "0.5rem", "gutter-mobile": "0.75rem", "margin-desktop": "2rem", "space-lg": "1.5rem", "margin": "1rem" }, fontFamily: { "label-numeric-md": ["JetBrains Mono"], "headline-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-caps": ["Plus Jakarta Sans"], "label-numeric-lg": ["JetBrains Mono"], "headline-md": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Plus Jakarta Sans"] }, fontSize: { "label-numeric-md": ["14px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" }], "label-numeric-lg": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "800" }] } } } };</script></head><body class="bg-surface text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="KSP Maju Makmur Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UhmxVev-8lYroOAFB8sAo3mpB5GN-0TPt1bNUXaT0mHm8wajjX0S9gnGXXn3LfPj6h7ly9sgyGc-bpoKlC2yZJZlpeq1lnb5x4eUTHbXCmJGELAOu1DtMCMcVmr6jRq9Vr2DsKZ2_HUBjQjOGU2D2_3ItCYFH_5_hlZ78b5TRO65mym1sspPD7FRMOsnjQb01UbkiVhJAD5_GZesqu1B5Nnk5dbKmbzxM51LAdq-D7-w"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">KSP Maju Makmur</span><div class="flex items-center gap-space-xs"><span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps">Anggota Aktif</span><span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline">• Laporan Profil</span></div></div></div><div class="flex items-center gap-space-sm"><button class="min-w-[44px] min-h-[44px] flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors relative" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-secondary-container ring-2 ring-surface"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full max-w-[480px] mx-auto px-margin pt-16 pb-24 bg-surface flex-grow"><div class="flex flex-col w-full gap-space-md">
+<!-- Top Navigation & Code Header -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<button aria-label="Kembali" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Nomor Rekening Akad</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-lg text-label-numeric-lg text-on-surface font-semibold tracking-tight">PJ-2024-089</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center" id="btn-copy" title="Salin Kode" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+      Sedang Berjalan
+    </span>
+</div>
+<!-- Loan Overview Hero Card -->
+<div class="relative overflow-hidden rounded-xl bg-primary text-on-primary shadow-xl p-space-lg flex flex-col gap-space-md">
+<!-- Decorative background glow -->
+<div class="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-primary-container/60 blur-2xl pointer-events-none"></div>
+<div class="absolute -left-10 -bottom-10 w-36 h-36 rounded-full bg-secondary-container/20 blur-xl pointer-events-none"></div>
+<div class="relative flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-primary-container">Total Plafon Disetujui</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-body-md text-body-md text-on-primary-container font-medium">Rp</span>
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold tracking-tight text-on-primary">10.000.000</span>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-lg bg-surface-container-lowest/15 backdrop-blur-md flex items-center gap-1.5 text-on-primary">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-caps text-label-caps">Akad Mudharabah</span>
+</div>
+</div>
+<!-- Progress Metric Bar -->
+<div class="relative flex flex-col gap-1.5 pt-1">
+<div class="flex justify-between items-center text-on-primary">
+<span class="font-body-sm text-body-sm text-on-primary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">timelapse</span>
+          Progres Pelunasan
+        </span>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-secondary-fixed">50% Terbayar</span>
+</div>
+<!-- Progress Track -->
+<div class="w-full h-2.5 rounded-full bg-primary-container overflow-hidden p-0.5 shadow-inner">
+<div class="h-full rounded-full bg-secondary-fixed transition-all duration-500 shadow-sm" style="width: 50%;"></div>
+</div>
+<div class="flex justify-between items-center text-[11px] text-on-primary-container/80 pt-0.5">
+<span>6 Angsuran Lunas</span>
+<span>Sisa 6 Angsuran</span>
+</div>
+</div>
+<!-- Dual Metric Split -->
+<div class="relative grid grid-cols-2 gap-space-sm pt-2">
+<div class="p-3 rounded-lg bg-surface-container-lowest/10 backdrop-blur-sm flex flex-col">
+<span class="font-body-sm text-body-sm text-on-primary-container">Sudah Dibayar</span>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-primary mt-1">Rp 5.719.998</span>
+<span class="font-label-caps text-[10px] text-primary-fixed mt-0.5">6/12 Angsuran Selesai</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-lowest/10 backdrop-blur-sm flex flex-col">
+<span class="font-body-sm text-body-sm text-on-primary-container">Sisa Pokok</span>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-secondary-fixed mt-1">Rp 4.280.002</span>
+<span class="font-label-caps text-[10px] text-on-primary-container/90 mt-0.5">Termasuk Bagi Hasil</span>
+</div>
+</div>
+<!-- Timestamps Footer inside card -->
+<div class="relative pt-space-xs flex items-center justify-between text-on-primary-container font-body-sm text-body-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Cair: <strong>15 Jan 2025</strong></span>
+</div>
+<span class="text-on-primary-container/40">•</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">event_available</span>
+<span>Tempo: <strong>15 Jan 2026</strong></span>
+</div>
+</div>
+</div>
+<!-- Primary Quick Action Buttons -->
+<div class="grid grid-cols-1 gap-2.5">
+<button class="w-full min-h-[48px] px-4 py-3 rounded-lg bg-secondary text-on-secondary font-headline-sm text-headline-sm flex items-center justify-between shadow-md active:scale-[0.98] transition-all group" id="btn-pay-now" type="button">
+<div class="flex items-center gap-space-sm text-left">
+<div class="w-9 h-9 rounded-full bg-secondary-container/20 flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold leading-tight">Bayar Angsuran Ke-7</span>
+<span class="font-body-sm text-body-sm text-secondary-fixed">Rp 953.333 • Tempo 8 Hari Lagi</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[22px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full min-h-[48px] px-4 py-2.5 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-title-md text-title-md shadow-sm" id="btn-print-pdf" type="button">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span>Cetak Bukti Digital (PDF/Struk)</span>
+</button>
+</div>
+<!-- Member Trust Micro-Banner with Representative Photo -->
+<div class="flex items-center gap-space-md p-3 rounded-xl bg-surface-container-low">
+<img class="w-12 h-12 rounded-full object-cover flex-shrink-0 shadow-sm" data-alt="Warm portrait of an Indonesian cooperative loan officer smiling politely in a batik uniform holding a digital tablet inside a clean modern savings office with soft tropical daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpdLq4D1c6dAJHOxfIqRkttZNuc9gKxMA8hrCmK1D0DD8ue5uJIRVSG_ndJ6lg10k0H2q2q-vHeBBCSzEfVnvTJsnpY2okBdtJeppVI-v1dRZPQ1K__Cju3eGaEqn-KZcLPSwy_cERTJF6McFQ23gqiYrHdI8DgI8FgXbBqWps5W649pI7TJgN9096XJHDQKDBseYpE-eV4H9OA6QtiU9n9OUhm4kVGx4tcA8MWXha"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1">
+<span class="font-title-md text-title-md text-on-surface truncate">Pendampingan Anggota</span>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Butuh restrukturisasi atau pelunasan awal? Hubungi pengurus koperasi.</span>
+</div>
+</div>
+<!-- Section Header & Filter / Status Tab -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Kartu Angsuran</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jadwal resmi pelunasan 12 periode</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container p-1 rounded-lg">
+<button class="px-2.5 py-1 rounded-md text-on-primary bg-primary font-label-caps text-label-caps shadow-sm" type="button">Semua (12)</button>
+<button class="px-2.5 py-1 rounded-md text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps" type="button">Tunggakan (0)</button>
+</div>
+</div>
+<!-- Installment Schedule List (Responsive Card Mosaic) -->
+<div class="flex flex-col gap-2.5">
+<!-- Item 1: Lunas -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold">
+            #1
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Angsuran Periode 1</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Feb 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold">LUNAS</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>Dibayar: 14 Feb 2025</span>
+</div>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-surface">Rp 953.333</span>
+</div>
+</div>
+<!-- Item 2: Lunas -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold">
+            #2
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Angsuran Periode 2</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Mar 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold">LUNAS</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>Dibayar: 15 Mar 2025</span>
+</div>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-surface">Rp 953.333</span>
+</div>
+</div>
+<!-- Item 3: Lunas -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold">
+            #3
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Angsuran Periode 3</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Apr 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold">LUNAS</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>Dibayar: 12 Apr 2025</span>
+</div>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-surface">Rp 953.333</span>
+</div>
+</div>
+<!-- Item 4: Lunas -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold">
+            #4
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Angsuran Periode 4</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Mei 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold">LUNAS</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>Dibayar: 15 Mei 2025</span>
+</div>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-surface">Rp 953.333</span>
+</div>
+</div>
+<!-- Item 5: Lunas -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold">
+            #5
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Angsuran Periode 5</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Jun 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold">LUNAS</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>Dibayar: 14 Jun 2025</span>
+</div>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-surface">Rp 953.333</span>
+</div>
+</div>
+<!-- Item 6: Lunas -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold">
+            #6
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Angsuran Periode 6</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Jul 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps font-bold">LUNAS</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>Dibayar: 15 Jul 2025</span>
+</div>
+<span class="font-label-numeric-md text-label-numeric-md font-bold text-on-surface">Rp 953.333</span>
+</div>
+</div>
+<!-- Item 7: Menunggu Pembayaran (Active Focus Card) -->
+<div class="relative p-4 rounded-xl bg-surface-container-lowest shadow-md flex flex-col gap-3 overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary-fixed-dim"></div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-numeric-md text-label-numeric-md font-bold shadow-sm">
+            #7
+          </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md font-bold text-on-surface">Angsuran Periode 7</span>
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Jatuh Tempo: 15 Agu 2025</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-caps text-label-caps font-bold shadow-sm">
+          MENUNGGU PEMBAYARAN
+        </span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5 text-secondary font-body-sm text-body-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>Jatuh Tempo 8 Hari lagi</span>
+</div>
+<span class="font-label-numeric-lg text-label-numeric-lg font-bold text-on-surface">Rp 953.333</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 py-2.5 px-3 rounded-lg bg-primary text-on-primary font-body-md text-body-md font-semibold flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+<span>Bayar via QRIS / VA</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-primary active:scale-95 transition-all flex items-center justify-center" title="Rincian Tagihan" type="button">
+<span class="material-symbols-outlined text-[20px]">info</span>
+</button>
+</div>
+</div>
+<!-- Items 8 to 12: Belum Jatuh Tempo (Collapsible / Compact Display) -->
+<div class="p-3.5 rounded-xl bg-surface-container-low opacity-80 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-label-numeric-md text-label-numeric-md font-medium">
+            #8
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-medium text-on-surface">Angsuran Periode 8</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Sep 2025</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">BELUM JATUH TEMPO</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-body-sm text-body-sm">Status: Terjadwal</span>
+<span class="font-label-numeric-md text-label-numeric-md font-medium text-on-surface-variant">Rp 953.333</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-low opacity-80 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-label-numeric-md text-label-numeric-md font-medium">
+            #9
+          </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-medium text-on-surface">Angsuran Periode 9</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Okt 2025</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">BELUM JATUH TEMPO</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-body-sm text-body-sm">Status: Terjadwal</span>
+<span class="font-label-numeric-md text-label-numeric-md font-medium text-on-surface-variant">Rp 953.333</span>
+</div>
+</div>
+<!-- Remaining installments accordion trigger -->
+<div class="hidden flex-col gap-2.5" id="remaining-installments">
+<div class="p-3.5 rounded-xl bg-surface-container-low opacity-80 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-label-numeric-md text-label-numeric-md font-medium">
+              #10
+            </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-medium text-on-surface">Angsuran Periode 10</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Nov 2025</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">BELUM JATUH TEMPO</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-body-sm text-body-sm">Status: Terjadwal</span>
+<span class="font-label-numeric-md text-label-numeric-md font-medium text-on-surface-variant">Rp 953.333</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-low opacity-80 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-label-numeric-md text-label-numeric-md font-medium">
+              #11
+            </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-medium text-on-surface">Angsuran Periode 11</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Des 2025</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">BELUM JATUH TEMPO</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-body-sm text-body-sm">Status: Terjadwal</span>
+<span class="font-label-numeric-md text-label-numeric-md font-medium text-on-surface-variant">Rp 953.333</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-low opacity-80 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-label-numeric-md text-label-numeric-md font-medium">
+              #12
+            </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-medium text-on-surface">Angsuran Periode 12 (Akhir)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jatuh Tempo: 15 Jan 2026</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">BELUM JATUH TEMPO</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-body-sm text-body-sm">Status: Pelunasan Akhir</span>
+<span class="font-label-numeric-md text-label-numeric-md font-medium text-on-surface-variant">Rp 953.333</span>
+</div>
+</div>
+</div>
+<!-- Toggle button for #10 - #12 -->
+<button class="w-full py-2.5 rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm font-semibold flex items-center justify-center gap-1 hover:bg-surface-container-high transition-colors" id="btn-toggle-schedule" type="button">
+<span id="toggle-label">Lihat Angsuran #10 s/d #12</span>
+<span class="material-symbols-outlined text-[18px]" id="toggle-icon">expand_more</span>
+</button>
+</div>
+<!-- Cooperative Policy & Penalty Notice Banner -->
+<div class="flex items-start gap-space-sm p-3.5 rounded-xl bg-surface-container text-on-surface-variant">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Ketentuan &amp; Denda Koperasi</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-relaxed">
+        Denda keterlambatan <strong class="text-on-surface font-semibold">0.1% per hari kerja</strong> setelah tanggal jatuh tempo. Pembayaran dapat disalurkan melalui Rekening Virtual KSP Maju Makmur atau kasir kantor cabang.
+      </p>
+</div>
+</div>
+<!-- Feedback Toast Notification (Hidden by default) -->
+<div class="fixed bottom-20 left-1/2 -translate-x-1/2 max-w-[400px] w-[90%] bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between pointer-events-none opacity-0 transition-opacity duration-300 z-50" id="toast">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-inverse-primary text-[20px]" id="toast-icon">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium" id="toast-msg">Berhasil disimpan</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-primary-container">KSP MM</span>
+</div>
+</div>
+<script>
+  // Simple interactive client-side handles
+  const copyBtn = document.getElementById('btn-copy');
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toast-msg');
+  const toggleBtn = document.getElementById('btn-toggle-schedule');
+  const remainingBlock = document.getElementById('remaining-installments');
+  const toggleLabel = document.getElementById('toggle-label');
+  const toggleIcon = document.getElementById('toggle-icon');
+  const printPdfBtn = document.getElementById('btn-print-pdf');
+  const payNowBtn = document.getElementById('btn-pay-now');
+
+  function showToast(message) {
+    if (!toast) return;
+    toastMsg.textContent = message;
+    toast.classList.remove('opacity-0');
+    toast.classList.add('opacity-100');
+    setTimeout(() => {
+      toast.classList.remove('opacity-100');
+      toast.classList.add('opacity-0');
+    }, 2400);
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard?.writeText('PJ-2024-089');
+      showToast('Nomor Pinjaman PJ-2024-089 disalin!');
+    });
+  }
+
+  if (toggleBtn && remainingBlock) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = remainingBlock.classList.contains('hidden');
+      if (isHidden) {
+        remainingBlock.classList.remove('hidden');
+        remainingBlock.classList.add('flex');
+        toggleLabel.textContent = 'Sembunyikan Angsuran #10 s/d #12';
+        toggleIcon.textContent = 'expand_less';
+      } else {
+        remainingBlock.classList.remove('flex');
+        remainingBlock.classList.add('hidden');
+        toggleLabel.textContent = 'Lihat Angsuran #10 s/d #12';
+        toggleIcon.textContent = 'expand_more';
+      }
+    });
+  }
+
+  if (printPdfBtn) {
+    printPdfBtn.addEventListener('click', () => {
+      showToast('Menyiapkan file PDF kartu angsuran...');
+    });
+  }
+
+  if (payNowBtn) {
+    payNowBtn.addEventListener('click', () => {
+      showToast('Membuka kanal pembayaran Angsuran #7...');
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(15,23,42,0.06)]" data-active-classes="text-primary font-semibold"><div class="max-w-[480px] mx-auto flex justify-between items-center h-16 px-gutter-mobile"><a class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant transition-colors group" data-path="beranda" href="#"><span class="material-symbols-outlined text-[22px] group-[.font-semibold]:text-primary">dashboard</span><span class="font-body-sm text-body-sm mt-0.5 text-center group-[.font-semibold]:text-primary">Beranda</span></a><a class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant transition-colors group" data-path="data-master" href="#"><span class="material-symbols-outlined text-[22px] group-[.font-semibold]:text-primary">group</span><span class="font-body-sm text-body-sm mt-0.5 text-center group-[.font-semibold]:text-primary">Master</span></a><a class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant transition-colors group" data-path="pengajuan" href="#"><span class="material-symbols-outlined text-[22px] group-[.font-semibold]:text-primary">post_add</span><span class="font-body-sm text-body-sm mt-0.5 text-center group-[.font-semibold]:text-primary">Pengajuan</span></a><a aria-current="page" class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 transition-colors group text-primary font-semibold" data-path="laporan-profil" href="#"><span class="material-symbols-outlined text-[22px] group-[.font-semibold]:text-primary">account_circle</span><span class="font-body-sm text-body-sm mt-0.5 text-center group-[.font-semibold]:text-primary">Laporan</span></a></div></nav></body></html>
