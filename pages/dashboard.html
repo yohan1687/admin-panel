@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dashboard — KSP Maju Makmur</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g950:#052e16;--g800:#14532d;--g600:#16a34a;--g400:#4ade80;--g100:#dcfce7;
+  --amb:#f59e0b;--amb100:#fef3c7;
+  --s900:#0f172a;--s700:#334155;--s400:#94a3b8;--s200:#e2e8f0;--s50:#f8fafc;
+  --white:#fff;--sw:256px;--hh:64px;--r:10px;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--s50);color:var(--s900);min-height:100vh;display:flex}
+/* Sidebar */
+.sidebar{width:var(--sw);background:var(--g950);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .25s}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-icon{width:36px;height:36px;background:var(--g600);border-radius:8px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.sb-text strong{display:block;color:var(--white);font-size:14px;font-weight:700}
+.sb-text span{color:var(--g400);font-size:11px}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-lbl{padding:16px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--s400);text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;text-decoration:none;transition:background .15s,color .15s;border:none;background:none;width:100%;text-align:left;cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.nav-item.active{background:var(--g800);color:var(--white);border-left:3px solid var(--amb);padding-left:17px}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--amb);color:var(--s900);font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;font-family:var(--mono)}
+.sb-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.u-av{width:34px;height:34px;background:var(--g600);border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--white);flex-shrink:0}
+.u-info strong{display:block;color:var(--white);font-size:13px}
+.u-info span{color:var(--s400);font-size:11px}
+/* Main */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
+/* Header */
+.header{height:var(--hh);background:var(--white);border-bottom:1px solid var(--s200);display:flex;align-items:center;gap:16px;padding:0 28px;position:sticky;top:0;z-index:50}
+.btn-toggle{display:none;background:none;border:1px solid var(--s200);border-radius:6px;padding:6px 8px;cursor:pointer;font-size:18px;color:var(--s700)}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--s400)}
+.breadcrumb span:last-child{color:var(--s900);font-weight:600}
+.h-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.h-search{display:flex;align-items:center;gap:8px;background:var(--s50);border:1px solid var(--s200);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--s400);width:220px}
+.h-icon{position:relative;width:36px;height:36px;background:var(--s50);border:1px solid var(--s200);border-radius:8px;display:grid;place-items:center;cursor:pointer;font-size:16px;color:var(--s700)}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid var(--white)}
+.h-profile{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border:1px solid var(--s200);border-radius:8px;cursor:pointer}
+.p-av{width:28px;height:28px;background:var(--g600);border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--white)}
+/* Content */
+.content{flex:1;padding:28px}
+.pg-hdr{margin-bottom:24px}
+.pg-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.pg-sub{font-size:13.5px;color:var(--s400)}
+/* Cards */
+.cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.mc{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.mc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.mc-lbl{font-size:12.5px;color:var(--s400);font-weight:500}
+.mc-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;font-size:17px}
+.ic-g{background:var(--g100)}.ic-a{background:var(--amb100)}.ic-b{background:#dbeafe}.ic-r{background:#fee2e2}
+.mc-val{font-size:22px;font-weight:700;font-family:var(--mono);margin-bottom:6px}
+.mc-delta{font-size:12px;display:flex;align-items:center;gap:4px;color:var(--s400)}
+.up{color:var(--g600);font-weight:600}.dn{color:#ef4444;font-weight:600}
+/* Two col */
+.two-col{display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:24px}
+.card{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.card-title{font-size:14px;font-weight:700}
+.card-action{font-size:12px;color:var(--g600);font-weight:600;cursor:pointer;text-decoration:none}
+/* Txn */
+.txn-list{display:flex;flex-direction:column;gap:12px}
+.txn-item{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--s200)}
+.txn-item:last-child{border-bottom:none;padding-bottom:0}
+.txn-av{width:36px;height:36px;border-radius:50%;background:var(--g100);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--g800);flex-shrink:0}
+.txn-info{flex:1;min-width:0}
+.txn-name{font-size:13px;font-weight:600}
+.txn-desc{font-size:11.5px;color:var(--s400)}
+.txn-amt{text-align:right;flex-shrink:0}
+.txn-amt strong{display:block;font-size:13px;font-family:var(--mono);font-weight:600}
+.txn-amt span{font-size:11px;color:var(--s400)}
+/* Table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--s400);border-bottom:1px solid var(--s200);background:var(--s50);text-transform:uppercase;letter-spacing:.04em}
+tbody td{padding:12px;border-bottom:1px solid var(--s200);color:var(--s700)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--s50)}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.bg-g{background:var(--g100);color:var(--g800)}.bg-a{background:var(--amb100);color:#92400e}.bg-r{background:#fee2e2;color:#991b1b}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-p{background:var(--g600);color:var(--white)}
+.btn-o{background:var(--white);border:1px solid var(--s200);color:var(--s700)}
+.btn-sm{padding:5px 10px;font-size:12px}
+/* Footer */
+.footer{padding:16px 28px;border-top:1px solid var(--s200);background:var(--white);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--s400)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+@media(max-width:1100px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+@media(max-width:720px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .overlay.open{display:block}.main{margin-left:0}.btn-toggle{display:flex}
+  .h-search{display:none}.content{padding:16px}.cards-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){.cards-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-icon">🌾</div>
+    <div class="sb-text"><strong>Maju Makmur</strong><span>Koperasi Simpan Pinjam</span></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-lbl">Utama</div>
+    <a class="nav-item active" href="dashboard.html"><span class="nav-icon">📊</span>Dashboard</a>
+    <div class="nav-lbl">Data Master</div>
+    <a class="nav-item" href="data-master.html"><span class="nav-icon">👥</span>Data Anggota<span class="nav-badge">428</span></a>
+    <a class="nav-item" href="#"><span class="nav-icon">💰</span>Produk Simpanan</a>
+    <a class="nav-item" href="#"><span class="nav-icon">📋</span>Produk Pinjaman</a>
+    <div class="nav-lbl">Transaksi</div>
+    <a class="nav-item" href="form.html"><span class="nav-icon">📝</span>Pengajuan Pinjaman<span class="nav-badge">5</span></a>
+    <a class="nav-item" href="#"><span class="nav-icon">🏦</span>Setor/Tarik Simpanan</a>
+    <div class="nav-lbl">Laporan</div>
+    <a class="nav-item" href="laporan.html"><span class="nav-icon">📄</span>Kartu Angsuran</a>
+    <a class="nav-item" href="#"><span class="nav-icon">📈</span>Buku Tabungan</a>
+  </nav>
+  <div class="sb-user">
+    <div class="u-av">BH</div>
+    <div class="u-info"><strong>Bpk. Hendra</strong><span>Bendahara</span></div>
+  </div>
+</aside>
+<div class="main">
+  <header class="header">
+    <button class="btn-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb"><span>KSP Maju Makmur</span><span>›</span><span>Dashboard</span></div>
+    <div class="h-right">
+      <div class="h-search">🔍 Cari anggota…</div>
+      <div class="h-icon">🔔<span class="notif-dot"></span></div>
+      <div class="h-profile"><div class="p-av">BH</div><span style="font-size:13px;font-weight:600">Hendra</span> ▾</div>
+    </div>
+  </header>
+  <main class="content">
+    <div class="pg-hdr">
+      <div class="pg-title">Selamat Datang, Bpk. Hendra 👋</div>
+      <div class="pg-sub">Ringkasan aktivitas KSP Maju Makmur — <span id="tgl"></span></div>
+    </div>
+    <div class="cards-grid">
+      <div class="mc">
+        <div class="mc-top"><span class="mc-lbl">Total Anggota Aktif</span><div class="mc-icon ic-g">👥</div></div>
+        <div class="mc-val">412</div>
+        <div class="mc-delta"><span class="up">↑ 8</span> anggota bulan ini</div>
+      </div>
+      <div class="mc">
+        <div class="mc-top"><span class="mc-lbl">Total Dana Simpanan</span><div class="mc-icon ic-a">🏦</div></div>
+        <div class="mc-val">Rp 847 Jt</div>
+        <div class="mc-delta"><span class="up">↑ 3.2%</span> dari bulan lalu</div>
+      </div>
+      <div class="mc">
+        <div class="mc-top"><span class="mc-lbl">Pinjaman Berjalan</span><div class="mc-icon ic-b">💳</div></div>
+        <div class="mc-val">Rp 1,2 M</div>
+        <div class="mc-delta">dari <strong>63</strong> pinjaman aktif</div>
+      </div>
+      <div class="mc">
+        <div class="mc-top"><span class="mc-lbl">Pengajuan Pending</span><div class="mc-icon ic-r">⏳</div></div>
+        <div class="mc-val" id="pendingCount">5</div>
+        <div class="mc-delta"><span class="dn">↑ 2</span> baru hari ini</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Arus Kas — 6 Bulan Terakhir</span><a class="card-action" href="laporan.html">Lihat Laporan →</a></div>
+        <canvas id="chartArus" height="200"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Transaksi Terbaru</span><a class="card-action" href="#">Semua →</a></div>
+        <div class="txn-list">
+          <div class="txn-item"><div class="txn-av">AH</div><div class="txn-info"><div class="txn-name">Ahmad Dahlan</div><div class="txn-desc">Bayar Angsuran ke-4</div></div><div class="txn-amt"><strong style="color:var(--g600)">+Rp 950rb</strong><span>09:14</span></div></div>
+          <div class="txn-item"><div class="txn-av">SR</div><div class="txn-info"><div class="txn-name">Ibu Siti Rahmah</div><div class="txn-desc">Pengajuan Pinjaman Baru</div></div><div class="txn-amt"><strong>Rp 10 Jt</strong><span>08:45</span></div></div>
+          <div class="txn-item"><div class="txn-av">BS</div><div class="txn-info"><div class="txn-name">Budi Santoso</div><div class="txn-desc">Setor Simpanan Wajib</div></div><div class="txn-amt"><strong style="color:var(--g600)">+Rp 200rb</strong><span>08:02</span></div></div>
+          <div class="txn-item"><div class="txn-av">DK</div><div class="txn-info"><div class="txn-name">Dewi Kusuma</div><div class="txn-desc">Pengajuan Pinjaman</div></div><div class="txn-amt"><strong>Rp 15 Jt</strong><span>07:30</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">Pengajuan Pinjaman — Perlu Verifikasi</span><a class="card-action" href="form.html">Kelola Semua →</a></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>No. Pengajuan</th><th>Nama Anggota</th><th>Plafon</th><th>Tenor</th><th>Tgl Ajuan</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="pendingTbl"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <span>© 2026 KSP Maju Makmur</span>
+    <span>Milestone 3 — Dashboard · Client-Side Programming</span>
+  </footer>
+</div>
+<script>
+// Tanggal
+const d=new Date();document.getElementById('tgl').textContent=d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+// Toggle sidebar
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+// Chart
+const ctx=document.getElementById('chartArus').getContext('2d');
+new Chart(ctx,{type:'bar',data:{labels:['Apr','Mei','Jun','Jul','Agt','Sep'],datasets:[{label:'Pemasukan (Jt)',data:[142,168,155,190,175,210],backgroundColor:'rgba(22,163,74,.7)',borderRadius:6},{label:'Pengeluaran (Jt)',data:[98,112,105,130,118,145],backgroundColor:'rgba(245,158,11,.7)',borderRadius:6}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{family:'Plus Jakarta Sans',size:12}}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.05)'},ticks:{callback:v=>'Rp '+v+' Jt'}},x:{grid:{display:false}}}}});
+// Pending table
+const data=[
+  {no:'PJ-2026-064',nama:'Ibu Siti Rahmah',plafon:'Rp 10.000.000',tenor:'12 Bln',tgl:'21 Sep 2026',status:'Diajukan',cls:'bg-a'},
+  {no:'PJ-2026-063',nama:'Pak Rudi Hartono',plafon:'Rp 5.000.000',tenor:'6 Bln',tgl:'20 Sep 2026',status:'Diverifikasi',cls:'bg-a'},
+  {no:'PJ-2026-060',nama:'Dewi Kusuma',plafon:'Rp 15.000.000',tenor:'24 Bln',tgl:'18 Sep 2026',status:'Jatuh Tempo',cls:'bg-r'},
+];
+const tbody=document.getElementById('pendingTbl');
+data.forEach(r=>{
+  tbody.innerHTML+=`<tr>
+    <td><span style="font-family:'DM Mono',monospace;font-size:12px">${r.no}</span></td>
+    <td>${r.nama}</td><td><strong>${r.plafon}</strong></td><td>${r.tenor}</td><td>${r.tgl}</td>
+    <td><span class="badge ${r.cls}">${r.status}</span></td>
+    <td style="display:flex;gap:6px">
+      <button class="btn btn-p btn-sm" onclick="approve('${r.no}')">✔ Setujui</button>
+      <button class="btn btn-o btn-sm" onclick="reject('${r.no}')">✘ Tolak</button>
+    </td></tr>`;
+});
+function approve(no){if(confirm('Setujui pengajuan '+no+'?')){alert('✅ Pengajuan '+no+' disetujui!');location.reload()}}
+function reject(no){if(confirm('Tolak pengajuan '+no+'?')){alert('❌ Pengajuan '+no+' ditolak.');location.reload()}}
+</script>
+</body></html>

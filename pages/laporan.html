@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Laporan Kartu Angsuran — KSP Maju Makmur</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--g950:#052e16;--g800:#14532d;--g600:#16a34a;--g400:#4ade80;--g100:#dcfce7;--amb:#f59e0b;--amb100:#fef3c7;--s900:#0f172a;--s700:#334155;--s400:#94a3b8;--s200:#e2e8f0;--s50:#f8fafc;--white:#fff;--sw:256px;--r:10px;--font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--s50);color:var(--s900);min-height:100vh;display:flex}
+.sidebar{width:var(--sw);background:var(--g950);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .25s}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-icon{width:36px;height:36px;background:var(--g600);border-radius:8px;display:grid;place-items:center;font-size:18px}
+.sb-text strong{display:block;color:var(--white);font-size:14px;font-weight:700}
+.sb-text span{color:var(--g400);font-size:11px}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-lbl{padding:16px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--s400);text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;text-decoration:none;transition:background .15s;border:none;background:none;width:100%;cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.nav-item.active{background:var(--g800);color:var(--white);border-left:3px solid var(--amb);padding-left:17px}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--amb);color:var(--s900);font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;font-family:var(--mono)}
+.sb-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.u-av{width:34px;height:34px;background:var(--g600);border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--white)}
+.u-info strong{display:block;color:var(--white);font-size:13px}.u-info span{color:var(--s400);font-size:11px}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column}
+.header{height:64px;background:var(--white);border-bottom:1px solid var(--s200);display:flex;align-items:center;gap:16px;padding:0 28px;position:sticky;top:0;z-index:50}
+.btn-toggle{display:none;background:none;border:1px solid var(--s200);border-radius:6px;padding:6px 8px;cursor:pointer;font-size:18px;color:var(--s700)}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--s400)}
+.breadcrumb span:last-child{color:var(--s900);font-weight:600}
+.h-right{margin-left:auto;display:flex;gap:10px}
+.content{flex:1;padding:28px}
+.pg-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.pg-sub{font-size:13.5px;color:var(--s400);margin-bottom:24px}
+.filter-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-bar select,.filter-bar input{padding:8px 13px;border:1px solid var(--s200);border-radius:8px;font-family:var(--font);font-size:13px;background:var(--white);color:var(--s700)}
+/* Summary cards */
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.sum-card{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.sum-lbl{font-size:12px;color:var(--s400);margin-bottom:6px}
+.sum-val{font-size:20px;font-weight:700;font-family:var(--mono)}
+.sum-sub{font-size:11.5px;color:var(--s400);margin-top:4px}
+/* Kartu Angsuran */
+.print-area{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07);overflow:hidden}
+.print-header{background:linear-gradient(135deg,var(--g800),var(--g950));padding:24px;display:flex;justify-content:space-between;align-items:flex-start}
+.kop-kiri strong{display:block;font-size:18px;font-weight:700;color:var(--white);margin-bottom:2px}
+.kop-kiri span{font-size:12px;color:var(--g400)}
+.kop-kanan{text-align:right}
+.kop-kanan .no-pinjaman{font-size:13px;font-family:var(--mono);color:var(--amb);font-weight:600}
+.kop-kanan .tgl{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+.info-section{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--s200)}
+.info-block{padding:18px 24px;border-right:1px solid var(--s200)}
+.info-block:last-child{border-right:none}
+.info-title{font-size:11px;font-weight:600;color:var(--s400);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.info-row{display:flex;justify-content:space-between;margin-bottom:7px;font-size:13px}
+.info-row span:first-child{color:var(--s400)}
+.info-row span:last-child{font-weight:600}
+/* Progress bar */
+.progress-section{padding:18px 24px;border-bottom:1px solid var(--s200)}
+.prog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-lbl{font-size:13px;font-weight:600}
+.prog-pct{font-size:13px;font-weight:700;color:var(--g600);font-family:var(--mono)}
+.progress-bar{height:10px;background:var(--s200);border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--g600),var(--g400));border-radius:5px;transition:width .5s ease}
+/* Table angsuran */
+.tbl-section{padding:20px 24px}
+.tbl-title{font-size:14px;font-weight:700;margin-bottom:14px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--s400);border-bottom:1px solid var(--s200);background:var(--s50);text-transform:uppercase;letter-spacing:.04em}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--s200);color:var(--s700)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--s50)}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.bg-g{background:var(--g100);color:var(--g800)}.bg-a{background:var(--amb100);color:#92400e}.bg-r{background:#fee2e2;color:#991b1b}.bg-s{background:var(--s200);color:var(--s700)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-p{background:var(--g600);color:var(--white)}
+.btn-o{background:var(--white);border:1px solid var(--s200);color:var(--s700)}
+.footer{padding:16px 28px;border-top:1px solid var(--s200);background:var(--white);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--s400)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+@media print{
+  .sidebar,.header,.footer,.filter-bar,.sum-grid,.h-right,.btn-toggle{display:none!important}
+  .main{margin-left:0!important}
+  .content{padding:0!important}
+  body{background:white}
+}
+@media(max-width:720px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.btn-toggle{display:flex}.content{padding:16px}.sum-grid{grid-template-columns:1fr}.info-section{grid-template-columns:1fr}.info-block{border-right:none;border-bottom:1px solid var(--s200)}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-icon">🌾</div><div class="sb-text"><strong>Maju Makmur</strong><span>Koperasi Simpan Pinjam</span></div></div>
+  <nav class="sb-nav">
+    <div class="nav-lbl">Utama</div>
+    <a class="nav-item" href="dashboard.html"><span class="nav-icon">📊</span>Dashboard</a>
+    <div class="nav-lbl">Data Master</div>
+    <a class="nav-item" href="data-master.html"><span class="nav-icon">👥</span>Data Anggota</a>
+    <div class="nav-lbl">Transaksi</div>
+    <a class="nav-item" href="form.html"><span class="nav-icon">📝</span>Pengajuan Pinjaman<span class="nav-badge">5</span></a>
+    <div class="nav-lbl">Laporan</div>
+    <a class="nav-item active" href="laporan.html"><span class="nav-icon">📄</span>Kartu Angsuran</a>
+    <a class="nav-item" href="#"><span class="nav-icon">📈</span>Buku Tabungan</a>
+  </nav>
+  <div class="sb-user"><div class="u-av">BH</div><div class="u-info"><strong>Bpk. Hendra</strong><span>Bendahara</span></div></div>
+</aside>
+<div class="main">
+  <header class="header">
+    <button class="btn-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb"><span>KSP Maju Makmur</span><span>›</span><span>Laporan</span><span>›</span><span>Kartu Angsuran</span></div>
+    <div class="h-right">
+      <button class="btn btn-o" onclick="window.print()">🖨️ Cetak</button>
+      <button class="btn btn-p" onclick="exportPDF()">📄 Export PDF</button>
+    </div>
+  </header>
+  <main class="content">
+    <div class="pg-title">Kartu Angsuran Pinjaman</div>
+    <div class="pg-sub">Rincian jadwal pembayaran dan status pelunasan anggota.</div>
+    <div class="filter-bar">
+      <select id="filterPinjaman" onchange="loadData()">
+        <option value="PJ-2026-051">PJ-2026-051 — Ahmad Dahlan</option>
+        <option value="PJ-2026-044">PJ-2026-044 — Budi Santoso</option>
+        <option value="PJ-2026-038">PJ-2026-038 — Sri Wahyuni</option>
+      </select>
+      <span style="font-size:13px;color:var(--s400)">Tampilkan:</span>
+      <select id="filterTampil" onchange="loadData()">
+        <option>Semua Angsuran</option>
+        <option>Sudah Bayar</option>
+        <option>Belum Bayar</option>
+      </select>
+    </div>
+    <div class="sum-grid">
+      <div class="sum-card"><div class="sum-lbl">Sisa Kewajiban</div><div class="sum-val" id="sisaKewajiban">Rp 5.733.333</div><div class="sum-sub">dari Rp 11.440.000 total</div></div>
+      <div class="sum-card"><div class="sum-lbl">Angsuran Terbayar</div><div class="sum-val" id="sdBayar">6 / 12</div><div class="sum-sub">angsuran selesai</div></div>
+      <div class="sum-card"><div class="sum-lbl">Jatuh Tempo Berikutnya</div><div class="sum-val" id="jtBerikut" style="font-size:15px">15 Okt 2026</div><div class="sum-sub">Cicilan ke-7</div></div>
+    </div>
+    <div class="print-area" id="printArea">
+      <div class="print-header">
+        <div class="kop-kiri">
+          <strong>KSP Maju Makmur</strong>
+          <span>Koperasi Simpan Pinjam Terdaftar — Kemenkop UKM</span>
+          <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,.4)">Jl. Koperasi No.1, Yogyakarta · (0274) 123-456</div>
+        </div>
+        <div class="kop-kanan">
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:4px">KARTU ANGSURAN</div>
+          <div class="no-pinjaman" id="noPinjamanHdr">PJ-2026-051</div>
+          <div class="tgl" id="tglCetak"></div>
+        </div>
+      </div>
+      <div class="info-section">
+        <div class="info-block">
+          <div class="info-title">Data Peminjam</div>
+          <div class="info-row"><span>Nama</span><span id="iNama">Ahmad Dahlan</span></div>
+          <div class="info-row"><span>No. Anggota</span><span id="iNoAnggota" style="font-family:'DM Mono',monospace;font-size:12px">KSP-2025-001</span></div>
+          <div class="info-row"><span>No. Telepon</span><span id="iTelp">0812-3456-7890</span></div>
+          <div class="info-row"><span>Jaminan</span><span id="iJaminan">BPKB Kendaraan</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-title">Detail Pinjaman</div>
+          <div class="info-row"><span>Plafon</span><span id="iPlafon">Rp 10.000.000</span></div>
+          <div class="info-row"><span>Tenor</span><span id="iTenor">12 Bulan</span></div>
+          <div class="info-row"><span>Suku Bunga</span><span id="iBunga">1.2%/bulan (Flat)</span></div>
+          <div class="info-row"><span>Cicilan/Bulan</span><span id="iCicilan" style="color:var(--g600);font-weight:700">Rp 953.333</span></div>
+          <div class="info-row"><span>Tgl Pencairan</span><span id="iTglCair">15 Apr 2026</span></div>
+        </div>
+      </div>
+      <div class="progress-section">
+        <div class="prog-header"><span class="prog-lbl">Progress Pelunasan</span><span class="prog-pct" id="progPct">50%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:50%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--s400);margin-top:6px"><span>0%</span><span>Lunas 100%</span></div>
+      </div>
+      <div class="tbl-section">
+        <div class="tbl-title">Jadwal & Riwayat Angsuran</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Ke-</th><th>Jatuh Tempo</th><th>Pokok</th><th>Bunga</th><th>Total Cicilan</th><th>Tgl Bayar</th><th>Denda</th><th>Status</th></tr></thead>
+            <tbody id="tblAngsuran"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><span>© 2026 KSP Maju Makmur</span><span>Milestone 3 — Laporan & Cetak · Client-Side Programming</span></footer>
+</div>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function fmt(n){return'Rp '+n.toLocaleString('id-ID')}
+document.getElementById('tglCetak').textContent='Dicetak: '+new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+const dataPinjaman={
+  'PJ-2026-051':{nama:'Ahmad Dahlan',noAnggota:'KSP-2025-001',telp:'0812-3456-7890',jaminan:'BPKB Kendaraan',plafon:10000000,tenor:12,bunga:0.012,tglCair:'15 Apr 2026',sdBayar:6},
+  'PJ-2026-044':{nama:'Budi Santoso',noAnggota:'KSP-2025-003',telp:'0856-1234-5678',jaminan:'Tabungan (Blokir)',plafon:5000000,tenor:6,bunga:0.012,tglCair:'10 Mei 2026',sdBayar:4},
+  'PJ-2026-038':{nama:'Sri Wahyuni',noAnggota:'KSP-2025-006',telp:'0895-6789-0123',jaminan:'Sertifikat Tanah',plafon:15000000,tenor:24,bunga:0.012,tglCair:'01 Mar 2026',sdBayar:7},
+};
+function loadData(){
+  const id=document.getElementById('filterPinjaman').value;
+  const filter=document.getElementById('filterTampil').value;
+  const p=dataPinjaman[id];
+  const totalBunga=p.plafon*p.bunga*p.tenor;
+  const cicilan=Math.round((p.plafon+totalBunga)/p.tenor);
+  const pokok=Math.round(p.plafon/p.tenor);
+  const bunga=Math.round(p.plafon*p.bunga);
+  document.getElementById('noPinjamanHdr').textContent=id;
+  document.getElementById('iNama').textContent=p.nama;
+  document.getElementById('iNoAnggota').textContent=p.noAnggota;
+  document.getElementById('iTelp').textContent=p.telp;
+  document.getElementById('iJaminan').textContent=p.jaminan;
+  document.getElementById('iPlafon').textContent=fmt(p.plafon);
+  document.getElementById('iTenor').textContent=p.tenor+' Bulan';
+  document.getElementById('iBunga').textContent=(p.bunga*100).toFixed(1)+'%/bulan (Flat)';
+  document.getElementById('iCicilan').textContent=fmt(cicilan);
+  document.getElementById('iTglCair').textContent=p.tglCair;
+  const pct=Math.round((p.sdBayar/p.tenor)*100);
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('sdBayar').textContent=p.sdBayar+' / '+p.tenor;
+  document.getElementById('sisaKewajiban').textContent=fmt(cicilan*(p.tenor-p.sdBayar));
+  // Generate angsuran rows
+  const bulanNama=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'];
+  const tglCairParts=p.tglCair.split(' ');
+  const bln=bulanNama.indexOf(tglCairParts[1]);
+  const thn=parseInt(tglCairParts[2]);
+  const tbody=document.getElementById('tblAngsuran');
+  tbody.innerHTML='';
+  for(let i=1;i<=p.tenor;i++){
+    const jatuhBln=(bln+i)%12;const jatuhThn=thn+Math.floor((bln+i)/12);
+    const jatuhTempo=`${tglCairParts[0]} ${bulanNama[jatuhBln]} ${jatuhThn}`;
+    const lunas=i<=p.sdBayar;
+    const terlambat=!lunas&&i===p.sdBayar+1&&i<p.tenor;
+    let status='Belum';let cls='bg-s';let tglBayar='—';let denda='—';
+    if(lunas){status='Lunas';cls='bg-g';tglBayar=`${parseInt(tglCairParts[0])+2} ${bulanNama[jatuhBln]} ${jatuhThn}`;denda='Rp 0'}
+    else if(terlambat){status='Terlambat';cls='bg-r';denda='Rp 9.533'}
+    if(filter==='Sudah Bayar'&&!lunas)continue;
+    if(filter==='Belum Bayar'&&lunas)continue;
+    tbody.innerHTML+=`<tr>
+      <td style="font-weight:700;font-family:'DM Mono',monospace">${i}</td>
+      <td>${jatuhTempo}</td>
+      <td style="font-family:'DM Mono',monospace">${fmt(pokok)}</td>
+      <td style="font-family:'DM Mono',monospace">${fmt(bunga)}</td>
+      <td style="font-family:'DM Mono',monospace;font-weight:600">${fmt(cicilan)}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px">${tglBayar}</td>
+      <td style="color:${denda!=='Rp 0'&&denda!=='—'?'#ef4444':'inherit'}">${denda}</td>
+      <td><span class="badge ${cls}">${status}</span></td>
+    </tr>`;
+  }
+}
+function exportPDF(){alert('📄 Fitur export PDF akan menggunakan library jsPDF pada implementasi penuh.\n\nUntuk saat ini gunakan Ctrl+P → Save as PDF.')}
+loadData();
+</script>
+</body></html>

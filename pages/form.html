@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Form Pengajuan Pinjaman — KSP Maju Makmur</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--g950:#052e16;--g800:#14532d;--g600:#16a34a;--g400:#4ade80;--g100:#dcfce7;--amb:#f59e0b;--amb100:#fef3c7;--s900:#0f172a;--s700:#334155;--s400:#94a3b8;--s200:#e2e8f0;--s50:#f8fafc;--white:#fff;--sw:256px;--r:10px;--font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--s50);color:var(--s900);min-height:100vh;display:flex}
+.sidebar{width:var(--sw);background:var(--g950);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .25s}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-icon{width:36px;height:36px;background:var(--g600);border-radius:8px;display:grid;place-items:center;font-size:18px}
+.sb-text strong{display:block;color:var(--white);font-size:14px;font-weight:700}
+.sb-text span{color:var(--g400);font-size:11px}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-lbl{padding:16px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--s400);text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;text-decoration:none;transition:background .15s,color .15s;border:none;background:none;width:100%;cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.nav-item.active{background:var(--g800);color:var(--white);border-left:3px solid var(--amb);padding-left:17px}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--amb);color:var(--s900);font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;font-family:var(--mono)}
+.sb-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.u-av{width:34px;height:34px;background:var(--g600);border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--white)}
+.u-info strong{display:block;color:var(--white);font-size:13px}.u-info span{color:var(--s400);font-size:11px}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column}
+.header{height:64px;background:var(--white);border-bottom:1px solid var(--s200);display:flex;align-items:center;gap:16px;padding:0 28px;position:sticky;top:0;z-index:50}
+.btn-toggle{display:none;background:none;border:1px solid var(--s200);border-radius:6px;padding:6px 8px;cursor:pointer;font-size:18px;color:var(--s700)}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--s400)}
+.breadcrumb span:last-child{color:var(--s900);font-weight:600}
+.content{flex:1;padding:28px}
+.pg-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.pg-sub{font-size:13.5px;color:var(--s400);margin-bottom:24px}
+.form-layout{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+.card{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card-title{font-size:15px;font-weight:700;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--s200)}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-group label{font-size:12.5px;font-weight:600;color:var(--s700)}
+.form-group label span{color:#ef4444}
+.form-group input,.form-group select,.form-group textarea{padding:10px 13px;border:1.5px solid var(--s200);border-radius:8px;font-family:var(--font);font-size:13px;outline:none;transition:border .15s;color:var(--s900)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--g600);box-shadow:0 0 0 3px rgba(22,163,74,.1)}
+.form-group input.err,.form-group select.err{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.1)}
+.err-msg{font-size:11.5px;color:#ef4444;display:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* Slider */
+.slider-wrap{display:flex;flex-direction:column;gap:8px}
+.slider-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--s400)}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:var(--s200);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--g600);cursor:pointer;border:2px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+/* Simulasi card */
+.sim-card{background:linear-gradient(135deg,var(--g800),var(--g950));border-radius:var(--r);padding:24px;color:var(--white);position:sticky;top:84px}
+.sim-title{font-size:13px;font-weight:600;color:var(--g400);margin-bottom:18px;letter-spacing:.05em;text-transform:uppercase}
+.sim-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sim-row:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.sim-lbl{font-size:12px;color:rgba(255,255,255,.6)}
+.sim-val{font-size:14px;font-weight:700;font-family:var(--mono)}
+.sim-main{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;margin:16px 0;text-align:center}
+.sim-main-lbl{font-size:12px;color:var(--g400);margin-bottom:4px}
+.sim-main-val{font-size:28px;font-weight:700;font-family:var(--mono)}
+.sim-main-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+/* Progress steps */
+.steps{display:flex;align-items:center;margin-bottom:28px}
+.step{display:flex;align-items:center;gap:8px;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step.done .step-circle{background:var(--g600);color:var(--white)}
+.step.active .step-circle{background:var(--g600);color:var(--white);box-shadow:0 0 0 4px var(--g100)}
+.step.idle .step-circle{background:var(--s200);color:var(--s400)}
+.step-label{font-size:12px;font-weight:600;color:var(--s400)}
+.step.active .step-label{color:var(--g600)}
+.step.done .step-label{color:var(--s700)}
+.step-line{flex:1;height:2px;background:var(--s200);margin:0 8px}
+.step-line.done{background:var(--g600)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-p{background:var(--g600);color:var(--white)}
+.btn-o{background:var(--white);border:1.5px solid var(--s200);color:var(--s700)}
+.btn-full{width:100%;justify-content:center;margin-top:8px}
+.form-actions{display:flex;gap:10px;margin-top:8px}
+.success-box{display:none;background:var(--g100);border:1px solid #86efac;border-radius:10px;padding:20px;text-align:center;margin-top:16px}
+.success-box.show{display:block}
+.footer{padding:16px 28px;border-top:1px solid var(--s200);background:var(--white);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--s400)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+@media(max-width:900px){.form-layout{grid-template-columns:1fr}}
+@media(max-width:720px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.btn-toggle{display:flex}.content{padding:16px}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-icon">🌾</div><div class="sb-text"><strong>Maju Makmur</strong><span>Koperasi Simpan Pinjam</span></div></div>
+  <nav class="sb-nav">
+    <div class="nav-lbl">Utama</div>
+    <a class="nav-item" href="dashboard.html"><span class="nav-icon">📊</span>Dashboard</a>
+    <div class="nav-lbl">Data Master</div>
+    <a class="nav-item" href="data-master.html"><span class="nav-icon">👥</span>Data Anggota</a>
+    <div class="nav-lbl">Transaksi</div>
+    <a class="nav-item active" href="form.html"><span class="nav-icon">📝</span>Pengajuan Pinjaman<span class="nav-badge">5</span></a>
+    <a class="nav-item" href="#"><span class="nav-icon">🏦</span>Setor/Tarik Simpanan</a>
+    <div class="nav-lbl">Laporan</div>
+    <a class="nav-item" href="laporan.html"><span class="nav-icon">📄</span>Kartu Angsuran</a>
+  </nav>
+  <div class="sb-user"><div class="u-av">BH</div><div class="u-info"><strong>Bpk. Hendra</strong><span>Bendahara</span></div></div>
+</aside>
+<div class="main">
+  <header class="header">
+    <button class="btn-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb"><span>KSP Maju Makmur</span><span>›</span><span>Transaksi</span><span>›</span><span>Pengajuan Pinjaman</span></div>
+  </header>
+  <main class="content">
+    <div class="pg-title">Form Pengajuan Pinjaman</div>
+    <div class="pg-sub">Isi data lengkap untuk mengajukan permohonan pinjaman baru.</div>
+    <div class="steps">
+      <div class="step active" id="s1"><div class="step-circle">1</div><div class="step-label">Data Anggota</div></div>
+      <div class="step-line" id="l1"></div>
+      <div class="step idle" id="s2"><div class="step-circle">2</div><div class="step-label">Detail Pinjaman</div></div>
+      <div class="step-line" id="l2"></div>
+      <div class="step idle" id="s3"><div class="step-circle">3</div><div class="step-label">Konfirmasi</div></div>
+    </div>
+    <div class="form-layout">
+      <div>
+        <!-- Step 1 -->
+        <div id="step1">
+          <div class="card">
+            <div class="card-title">📋 Data Identitas Anggota</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>No. Anggota / NIK <span>*</span></label>
+                <input type="text" id="fNoAnggota" placeholder="KSP-2025-001 atau NIK"/>
+                <span class="err-msg" id="errNoAnggota">No. Anggota wajib diisi</span>
+              </div>
+              <div class="form-group">
+                <label>Nama Lengkap <span>*</span></label>
+                <input type="text" id="fNamaPemohon" placeholder="Nama sesuai KTP"/>
+                <span class="err-msg" id="errNamaPemohon">Nama wajib diisi</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>No. Telepon <span>*</span></label>
+                <input type="text" id="fTelpPemohon" placeholder="08xx-xxxx-xxxx"/>
+                <span class="err-msg" id="errTelpPemohon">No. telepon wajib diisi</span>
+              </div>
+              <div class="form-group">
+                <label>Pekerjaan <span>*</span></label>
+                <select id="fPekerjaan">
+                  <option value="">-- Pilih Pekerjaan --</option>
+                  <option>Petani</option><option>Pedagang</option><option>PNS</option>
+                  <option>Karyawan Swasta</option><option>Wiraswasta</option><option>Lainnya</option>
+                </select>
+                <span class="err-msg" id="errPekerjaan">Pekerjaan wajib dipilih</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Penghasilan Per Bulan <span>*</span></label>
+              <input type="number" id="fPenghasilan" placeholder="Contoh: 3500000"/>
+              <span class="err-msg" id="errPenghasilan">Penghasilan wajib diisi</span>
+            </div>
+            <div class="form-group">
+              <label>Tujuan Pinjaman <span>*</span></label>
+              <select id="fTujuan">
+                <option value="">-- Pilih Tujuan --</option>
+                <option>Modal Usaha</option><option>Renovasi Rumah</option>
+                <option>Biaya Pendidikan</option><option>Kesehatan</option><option>Lainnya</option>
+              </select>
+              <span class="err-msg" id="errTujuan">Tujuan pinjaman wajib dipilih</span>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-p" onclick="nextStep(2)" style="margin-left:auto">Lanjut →</button>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div id="step2" style="display:none">
+          <div class="card">
+            <div class="card-title">💰 Detail Pinjaman</div>
+            <div class="form-group">
+              <label>Plafon Pinjaman (Rp) <span>*</span></label>
+              <div class="slider-wrap">
+                <input type="range" id="sliderPlafon" min="1000000" max="50000000" step="500000" value="10000000" oninput="updateSim()"/>
+                <div class="slider-labels"><span>Rp 1 Jt</span><span>Rp 50 Jt</span></div>
+              </div>
+              <input type="number" id="fPlafon" placeholder="Masukkan nominal" value="10000000" oninput="document.getElementById('sliderPlafon').value=this.value;updateSim()"/>
+              <span class="err-msg" id="errPlafon">Plafon harus antara Rp 1 Jt – Rp 50 Jt</span>
+            </div>
+            <div class="form-group">
+              <label>Tenor (Bulan) <span>*</span></label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer"><input type="radio" name="tenor" value="3" onchange="updateSim()"> 3 Bulan</label>
+                <label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer"><input type="radio" name="tenor" value="6" onchange="updateSim()"> 6 Bulan</label>
+                <label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer"><input type="radio" name="tenor" value="12" checked onchange="updateSim()"> 12 Bulan</label>
+                <label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer"><input type="radio" name="tenor" value="24" onchange="updateSim()"> 24 Bulan</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Jenis Bunga</label>
+              <select id="fBunga" onchange="updateSim()">
+                <option value="flat">Flat — 1.2%/bulan</option>
+                <option value="menurun">Menurun (Efektif) — 1.5%/bulan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Jaminan <span>*</span></label>
+              <select id="fJaminan">
+                <option value="">-- Pilih Jaminan --</option>
+                <option>BPKB Kendaraan</option><option>Sertifikat Tanah</option>
+                <option>Tabungan (Blokir)</option><option>Lainnya</option>
+              </select>
+              <span class="err-msg" id="errJaminan">Jaminan wajib dipilih</span>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-o" onclick="nextStep(1)">← Kembali</button>
+              <button class="btn btn-p" onclick="nextStep(3)">Lanjut →</button>
+            </div>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div id="step3" style="display:none">
+          <div class="card">
+            <div class="card-title">✅ Konfirmasi Pengajuan</div>
+            <div id="konfirmasiDetail" style="display:flex;flex-direction:column;gap:10px;font-size:13.5px;color:var(--s700)"></div>
+            <div class="form-actions" style="margin-top:20px">
+              <button class="btn btn-o" onclick="nextStep(2)">← Kembali</button>
+              <button class="btn btn-p" onclick="submitForm()">📤 Ajukan Sekarang</button>
+            </div>
+          </div>
+          <div class="success-box" id="successBox">
+            <div style="font-size:36px;margin-bottom:8px">🎉</div>
+            <div style="font-size:16px;font-weight:700;color:var(--g800);margin-bottom:4px">Pengajuan Berhasil Dikirim!</div>
+            <div style="font-size:13px;color:var(--s400);margin-bottom:16px">No. Pengajuan: <strong id="noPengajuan" style="font-family:'DM Mono',monospace"></strong></div>
+            <a href="laporan.html"><button class="btn btn-p">Lihat Kartu Angsuran →</button></a>
+          </div>
+        </div>
+      </div>
+      <!-- Simulasi -->
+      <div class="sim-card">
+        <div class="sim-title">📊 Simulasi Angsuran</div>
+        <div class="sim-main">
+          <div class="sim-main-lbl">Cicilan Per Bulan</div>
+          <div class="sim-main-val" id="simCicilan">Rp 958.333</div>
+          <div class="sim-main-sub">Estimasi (belum final)</div>
+        </div>
+        <div class="sim-row"><span class="sim-lbl">Plafon Pinjaman</span><span class="sim-val" id="simPlafon">Rp 10.000.000</span></div>
+        <div class="sim-row"><span class="sim-lbl">Tenor</span><span class="sim-val" id="simTenor">12 Bulan</span></div>
+        <div class="sim-row"><span class="sim-lbl">Bunga/Bulan</span><span class="sim-val" id="simBunga">1.2% (Flat)</span></div>
+        <div class="sim-row"><span class="sim-lbl">Total Bunga</span><span class="sim-val" id="simTotalBunga">Rp 1.440.000</span></div>
+        <div class="sim-row"><span class="sim-lbl">Total Kewajiban</span><span class="sim-val" id="simTotal">Rp 11.440.000</span></div>
+        <div style="margin-top:16px;padding:12px;background:rgba(245,158,11,.15);border-radius:8px;font-size:11.5px;color:var(--amb100)">⚠️ Simulasi ini bersifat estimasi. Cicilan final ditentukan setelah persetujuan pengurus.</div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><span>© 2026 KSP Maju Makmur</span><span>Milestone 3 — Form Pinjaman · Client-Side Programming</span></footer>
+</div>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function fmt(n){return'Rp '+n.toLocaleString('id-ID')}
+function updateSim(){
+  const plafon=parseInt(document.getElementById('fPlafon').value)||10000000;
+  const tenor=parseInt(document.querySelector('input[name=tenor]:checked')?.value||12);
+  const jenis=document.getElementById('fBunga').value;
+  const rate=jenis==='flat'?0.012:0.015;
+  const totalBunga=plafon*rate*tenor;
+  const cicilan=(plafon+totalBunga)/tenor;
+  document.getElementById('simPlafon').textContent=fmt(plafon);
+  document.getElementById('simTenor').textContent=tenor+' Bulan';
+  document.getElementById('simBunga').textContent=(rate*100).toFixed(1)+'% ('+(jenis==='flat'?'Flat':'Menurun')+')';
+  document.getElementById('simTotalBunga').textContent=fmt(Math.round(totalBunga));
+  document.getElementById('simTotal').textContent=fmt(Math.round(plafon+totalBunga));
+  document.getElementById('simCicilan').textContent=fmt(Math.round(cicilan));
+  document.getElementById('sliderPlafon').value=plafon;
+}
+function nextStep(n){
+  if(n===2){
+    let ok=true;
+    const v=(id,fn)=>{const el=document.getElementById('f'+id);const err=document.getElementById('err'+id);const valid=fn(el.value);el.classList.toggle('err',!valid);err.style.display=valid?'none':'block';if(!valid)ok=false};
+    v('NoAnggota',v=>v.trim()!=='');v('NamaPemohon',v=>v.trim()!=='');v('TelpPemohon',v=>v.trim()!=='');v('Pekerjaan',v=>v!=='');v('Penghasilan',v=>v>0);v('Tujuan',v=>v!=='');
+    if(!ok)return;
+  }
+  if(n===3){
+    let ok=true;
+    const plafon=parseInt(document.getElementById('fPlafon').value)||0;
+    const epEl=document.getElementById('errPlafon');const pEl=document.getElementById('fPlafon');
+    if(plafon<1000000||plafon>50000000){pEl.classList.add('err');epEl.style.display='block';ok=false}else{pEl.classList.remove('err');epEl.style.display='none'}
+    const jam=document.getElementById('fJaminan').value;const jEl=document.getElementById('errJaminan');
+    if(!jam){document.getElementById('fJaminan').classList.add('err');jEl.style.display='block';ok=false}else{document.getElementById('fJaminan').classList.remove('err');jEl.style.display='none'}
+    if(!ok)return;
+    // Build konfirmasi
+    const tenor=document.querySelector('input[name=tenor]:checked')?.value||12;
+    const jenis=document.getElementById('fBunga').value;
+    const rows=[
+      ['Nama Pemohon',document.getElementById('fNamaPemohon').value],
+      ['No. Anggota',document.getElementById('fNoAnggota').value],
+      ['Tujuan Pinjaman',document.getElementById('fTujuan').value],
+      ['Plafon',fmt(parseInt(document.getElementById('fPlafon').value))],
+      ['Tenor',tenor+' Bulan'],
+      ['Jenis Bunga',jenis==='flat'?'Flat 1.2%/bulan':'Menurun 1.5%/bulan'],
+      ['Jaminan',document.getElementById('fJaminan').value],
+      ['Cicilan/Bulan',document.getElementById('simCicilan').textContent],
+    ];
+    document.getElementById('konfirmasiDetail').innerHTML=rows.map(r=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--s200)"><span style="color:var(--s400)">${r[0]}</span><strong>${r[1]}</strong></div>`).join('');
+  }
+  [1,2,3].forEach(i=>{document.getElementById('step'+i).style.display=i===n?'block':'none'});
+  const states=['idle','idle','idle'];states[n-1]='active';for(let i=0;i<n-1;i++)states[i]='done';
+  [1,2,3].forEach((i,idx)=>{const el=document.getElementById('s'+i);el.className='step '+states[idx]});
+  [1,2].forEach(i=>{document.getElementById('l'+i).className='step-line'+(i<n?' done':'')});
+}
+function submitForm(){
+  const no='PJ-2026-0'+Math.floor(60+Math.random()*10);
+  document.getElementById('noPengajuan').textContent=no;
+  document.getElementById('konfirmasiDetail').style.display='none';
+  document.querySelector('#step3 .form-actions').style.display='none';
+  document.getElementById('successBox').classList.add('show');
+}
+updateSim();
+</script>
+</body></html>

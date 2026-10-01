@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Data Master Anggota — KSP Maju Makmur</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--g950:#052e16;--g800:#14532d;--g600:#16a34a;--g400:#4ade80;--g100:#dcfce7;--amb:#f59e0b;--amb100:#fef3c7;--s900:#0f172a;--s700:#334155;--s400:#94a3b8;--s200:#e2e8f0;--s50:#f8fafc;--white:#fff;--sw:256px;--r:10px;--font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--s50);color:var(--s900);min-height:100vh;display:flex}
+.sidebar{width:var(--sw);background:var(--g950);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .25s}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-icon{width:36px;height:36px;background:var(--g600);border-radius:8px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.sb-text strong{display:block;color:var(--white);font-size:14px;font-weight:700}
+.sb-text span{color:var(--g400);font-size:11px}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-lbl{padding:16px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--s400);text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;text-decoration:none;transition:background .15s,color .15s;border:none;background:none;width:100%;text-align:left;cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.nav-item.active{background:var(--g800);color:var(--white);border-left:3px solid var(--amb);padding-left:17px}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--amb);color:var(--s900);font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;font-family:var(--mono)}
+.sb-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.u-av{width:34px;height:34px;background:var(--g600);border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--white);flex-shrink:0}
+.u-info strong{display:block;color:var(--white);font-size:13px}.u-info span{color:var(--s400);font-size:11px}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column}
+.header{height:64px;background:var(--white);border-bottom:1px solid var(--s200);display:flex;align-items:center;gap:16px;padding:0 28px;position:sticky;top:0;z-index:50}
+.btn-toggle{display:none;background:none;border:1px solid var(--s200);border-radius:6px;padding:6px 8px;cursor:pointer;font-size:18px;color:var(--s700)}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--s400)}
+.breadcrumb span:last-child{color:var(--s900);font-weight:600}
+.h-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.content{flex:1;padding:28px}
+.pg-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.pg-title{font-size:22px;font-weight:700}
+.pg-sub{font-size:13.5px;color:var(--s400)}
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--s200);border-radius:8px;padding:8px 14px;font-size:13px;flex:1;min-width:200px}
+.search-box input{border:none;outline:none;font-family:var(--font);font-size:13px;width:100%;background:transparent}
+select{padding:8px 14px;border:1px solid var(--s200);border-radius:8px;font-family:var(--font);font-size:13px;background:var(--white);color:var(--s700);cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-p{background:var(--g600);color:var(--white)}
+.btn-o{background:var(--white);border:1px solid var(--s200);color:var(--s700)}
+.btn-danger{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.btn-sm{padding:5px 10px;font-size:12px}
+.card{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07);overflow:hidden}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:11px 14px;font-size:11px;font-weight:600;color:var(--s400);border-bottom:1px solid var(--s200);background:var(--s50);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+tbody td{padding:13px 14px;border-bottom:1px solid var(--s200);color:var(--s700);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--s50)}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.bg-g{background:var(--g100);color:var(--g800)}.bg-r{background:#fee2e2;color:#991b1b}
+.actions{display:flex;gap:6px}
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--s200);font-size:13px;color:var(--s400);flex-wrap:wrap;gap:8px}
+.pg-btns{display:flex;gap:4px}
+.pg-btn{width:32px;height:32px;border:1px solid var(--s200);border-radius:6px;display:grid;place-items:center;cursor:pointer;font-size:13px;background:var(--white);color:var(--s700);font-family:var(--font)}
+.pg-btn.active{background:var(--g600);color:var(--white);border-color:var(--g600)}
+.pg-btn:hover:not(.active){background:var(--s50)}
+/* Modal */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--white);border-radius:12px;width:100%;max-width:540px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--s200)}
+.modal-title{font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--s400);line-height:1}
+.modal-body{padding:24px;display:flex;flex-direction:column;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12.5px;font-weight:600;color:var(--s700)}
+.form-group input,.form-group select{padding:9px 12px;border:1px solid var(--s200);border-radius:8px;font-family:var(--font);font-size:13px;outline:none;transition:border .15s}
+.form-group input:focus,.form-group select:focus{border-color:var(--g600)}
+.form-group input.err{border-color:#ef4444}
+.err-msg{font-size:11.5px;color:#ef4444;display:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--s200)}
+/* Confirm modal */
+.confirm-modal{background:var(--white);border-radius:12px;width:100%;max-width:380px;padding:28px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.confirm-icon{font-size:40px;margin-bottom:12px}
+.confirm-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.confirm-msg{font-size:13px;color:var(--s400);margin-bottom:24px}
+.confirm-btns{display:flex;gap:10px;justify-content:center}
+.footer{padding:16px 28px;border-top:1px solid var(--s200);background:var(--white);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--s400)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+@media(max-width:720px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.btn-toggle{display:flex}.content{padding:16px}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<!-- Modal Tambah/Edit -->
+<div class="modal-backdrop" id="modalForm">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span class="modal-title" id="modalTitle">Tambah Anggota Baru</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId"/>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nama Lengkap *</label>
+          <input type="text" id="fNama" placeholder="Nama lengkap anggota"/>
+          <span class="err-msg" id="errNama">Nama wajib diisi</span>
+        </div>
+        <div class="form-group">
+          <label>NIK *</label>
+          <input type="text" id="fNik" placeholder="16 digit NIK" maxlength="16"/>
+          <span class="err-msg" id="errNik">NIK harus 16 digit angka</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>No. Telepon *</label>
+          <input type="text" id="fTelp" placeholder="08xx-xxxx-xxxx"/>
+          <span class="err-msg" id="errTelp">No. telepon wajib diisi</span>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="fStatus">
+            <option value="Aktif">Aktif</option>
+            <option value="Non-Aktif">Non-Aktif</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Alamat *</label>
+        <input type="text" id="fAlamat" placeholder="Alamat lengkap"/>
+        <span class="err-msg" id="errAlamat">Alamat wajib diisi</span>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="fEmail" placeholder="email@contoh.com"/>
+        <span class="err-msg" id="errEmail">Format email tidak valid</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-o" onclick="closeModal()">Batal</button>
+      <button class="btn btn-p" onclick="saveAnggota()">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+<!-- Modal Konfirmasi Hapus -->
+<div class="modal-backdrop" id="modalHapus">
+  <div class="confirm-modal">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">Hapus Anggota?</div>
+    <div class="confirm-msg" id="hapusMsg">Data anggota ini akan dihapus permanen dan tidak bisa dikembalikan.</div>
+    <div class="confirm-btns">
+      <button class="btn btn-o" onclick="closeHapus()">Batal</button>
+      <button class="btn btn-danger" onclick="confirmHapus()">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-icon">🌾</div><div class="sb-text"><strong>Maju Makmur</strong><span>Koperasi Simpan Pinjam</span></div></div>
+  <nav class="sb-nav">
+    <div class="nav-lbl">Utama</div>
+    <a class="nav-item" href="dashboard.html"><span class="nav-icon">📊</span>Dashboard</a>
+    <div class="nav-lbl">Data Master</div>
+    <a class="nav-item active" href="data-master.html"><span class="nav-icon">👥</span>Data Anggota<span class="nav-badge" id="totalBadge">428</span></a>
+    <a class="nav-item" href="#"><span class="nav-icon">💰</span>Produk Simpanan</a>
+    <a class="nav-item" href="#"><span class="nav-icon">📋</span>Produk Pinjaman</a>
+    <div class="nav-lbl">Transaksi</div>
+    <a class="nav-item" href="form.html"><span class="nav-icon">📝</span>Pengajuan Pinjaman<span class="nav-badge">5</span></a>
+    <div class="nav-lbl">Laporan</div>
+    <a class="nav-item" href="laporan.html"><span class="nav-icon">📄</span>Kartu Angsuran</a>
+  </nav>
+  <div class="sb-user"><div class="u-av">BH</div><div class="u-info"><strong>Bpk. Hendra</strong><span>Bendahara</span></div></div>
+</aside>
+<div class="main">
+  <header class="header">
+    <button class="btn-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb"><span>KSP Maju Makmur</span><span>›</span><span>Data Master Anggota</span></div>
+    <div class="h-right">
+      <button class="btn btn-p" onclick="openModal()">+ Tambah Anggota</button>
+    </div>
+  </header>
+  <main class="content">
+    <div class="pg-hdr">
+      <div><div class="pg-title">Data Master Anggota</div><div class="pg-sub">Total <span id="totalCount">6</span> anggota terdaftar</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="search-box">🔍 <input type="text" id="searchInput" placeholder="Cari nama, NIK, atau no. anggota…" oninput="renderTable()"/></div>
+      <select id="filterStatus" onchange="renderTable()">
+        <option value="">Semua Status</option>
+        <option value="Aktif">Aktif</option>
+        <option value="Non-Aktif">Non-Aktif</option>
+      </select>
+    </div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>No. Anggota</th><th>Nama Lengkap</th><th>NIK</th><th>No. Telepon</th><th>Alamat</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="tblBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="pgInfo">Menampilkan 1–6 dari 6 data</span>
+        <div class="pg-btns"><button class="pg-btn active">1</button><button class="pg-btn">2</button><button class="pg-btn">›</button></div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><span>© 2026 KSP Maju Makmur</span><span>Milestone 3 — Data Master · Client-Side Programming</span></footer>
+</div>
+<script>
+let anggota=[
+  {id:1,no:'KSP-2025-001',nama:'Ahmad Dahlan',nik:'3471012501850001',telp:'0812-3456-7890',alamat:'Jl. Mawar No.12, Yogyakarta',status:'Aktif'},
+  {id:2,no:'KSP-2025-002',nama:'Ibu Siti Rahmah',nik:'3471015504920002',telp:'0813-9876-5432',alamat:'Jl. Melati No.5, Sleman',status:'Aktif'},
+  {id:3,no:'KSP-2025-003',nama:'Budi Santoso',nik:'3471011203880003',telp:'0856-1234-5678',alamat:'Jl. Kenanga No.8, Bantul',status:'Aktif'},
+  {id:4,no:'KSP-2025-004',nama:'Dewi Kusuma',nik:'3471014408950004',telp:'0878-2345-6789',alamat:'Jl. Dahlia No.3, Kulon Progo',status:'Non-Aktif'},
+  {id:5,no:'KSP-2025-005',nama:'Rudi Hartono',nik:'3471010707750005',telp:'0821-3456-7891',alamat:'Jl. Anggrek No.17, Gunung Kidul',status:'Aktif'},
+  {id:6,no:'KSP-2025-006',nama:'Sri Wahyuni',nik:'3471012909900006',telp:'0895-6789-0123',alamat:'Jl. Cempaka No.21, Yogyakarta',status:'Aktif'},
+];
+let deleteId=null;
+let nextId=7;
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function renderTable(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const st=document.getElementById('filterStatus').value;
+  const filtered=anggota.filter(a=>{
+    const match=(a.nama.toLowerCase().includes(q)||a.nik.includes(q)||a.no.toLowerCase().includes(q));
+    const stMatch=st===''||a.status===st;
+    return match&&stMatch;
+  });
+  document.getElementById('totalCount').textContent=filtered.length;
+  document.getElementById('totalBadge').textContent=anggota.length;
+  document.getElementById('pgInfo').textContent=`Menampilkan 1–${filtered.length} dari ${filtered.length} data`;
+  const tbody=document.getElementById('tblBody');
+  tbody.innerHTML='';
+  if(filtered.length===0){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--s400)">Tidak ada data yang ditemukan</td></tr>';return;}
+  filtered.forEach((a,i)=>{
+    tbody.innerHTML+=`<tr>
+      <td style="color:var(--s400)">${i+1}</td>
+      <td><span style="font-family:'DM Mono',monospace;font-size:12px">${a.no}</span></td>
+      <td><strong>${a.nama}</strong></td>
+      <td><span style="font-family:'DM Mono',monospace;font-size:12px">${a.nik}</span></td>
+      <td>${a.telp}</td>
+      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.alamat}</td>
+      <td><span class="badge ${a.status==='Aktif'?'bg-g':'bg-r'}">${a.status}</span></td>
+      <td><div class="actions">
+        <button class="btn btn-o btn-sm" onclick="editAnggota(${a.id})">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="hapusAnggota(${a.id})">🗑️ Hapus</button>
+      </div></td>
+    </tr>`;
+  });
+}
+function openModal(id=null){
+  document.getElementById('modalTitle').textContent=id?'Edit Data Anggota':'Tambah Anggota Baru';
+  document.getElementById('editId').value=id||'';
+  ['Nama','Nik','Telp','Alamat','Email'].forEach(f=>{document.getElementById('f'+f).value='';document.getElementById('err'+f).style.display='none';document.getElementById('f'+f).classList.remove('err')});
+  if(id){
+    const a=anggota.find(x=>x.id===id);
+    document.getElementById('fNama').value=a.nama;
+    document.getElementById('fNik').value=a.nik;
+    document.getElementById('fTelp').value=a.telp;
+    document.getElementById('fAlamat').value=a.alamat;
+    document.getElementById('fEmail').value=a.email||'';
+    document.getElementById('fStatus').value=a.status;
+  }
+  document.getElementById('modalForm').classList.add('open');
+}
+function editAnggota(id){openModal(id)}
+function closeModal(){document.getElementById('modalForm').classList.remove('open')}
+function saveAnggota(){
+  let valid=true;
+  const nama=document.getElementById('fNama').value.trim();
+  const nik=document.getElementById('fNik').value.trim();
+  const telp=document.getElementById('fTelp').value.trim();
+  const alamat=document.getElementById('fAlamat').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
+  const status=document.getElementById('fStatus').value;
+  const show=(id,msg,show)=>{document.getElementById('err'+id).textContent=msg;document.getElementById('err'+id).style.display=show?'block':'none';document.getElementById('f'+id).classList.toggle('err',show)};
+  if(!nama){show('Nama','Nama wajib diisi',true);valid=false;}else show('Nama','',false);
+  if(!/^\d{16}$/.test(nik)){show('Nik','NIK harus 16 digit angka',true);valid=false;}else show('Nik','',false);
+  if(!telp){show('Telp','No. telepon wajib diisi',true);valid=false;}else show('Telp','',false);
+  if(!alamat){show('Alamat','Alamat wajib diisi',true);valid=false;}else show('Alamat','',false);
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){show('Email','Format email tidak valid',true);valid=false;}else show('Email','',false);
+  if(!valid)return;
+  const id=document.getElementById('editId').value;
+  if(id){
+    const idx=anggota.findIndex(a=>a.id===parseInt(id));
+    anggota[idx]={...anggota[idx],nama,nik,telp,alamat,email,status};
+  } else {
+    const noNew='KSP-2026-00'+nextId;
+    anggota.push({id:nextId++,no:noNew,nama,nik,telp,alamat,email,status});
+  }
+  closeModal();renderTable();
+}
+function hapusAnggota(id){
+  deleteId=id;
+  const a=anggota.find(x=>x.id===id);
+  document.getElementById('hapusMsg').textContent=`Data "${a.nama}" akan dihapus permanen.`;
+  document.getElementById('modalHapus').classList.add('open');
+}
+function closeHapus(){document.getElementById('modalHapus').classList.remove('open');deleteId=null}
+function confirmHapus(){anggota=anggota.filter(a=>a.id!==deleteId);closeHapus();renderTable()}
+renderTable();
+</script>
+</body></html>
