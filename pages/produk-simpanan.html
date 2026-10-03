@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Produk Simpanan — KSP Maju Makmur</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--g950:#052e16;--g800:#14532d;--g600:#16a34a;--g400:#4ade80;--g100:#dcfce7;--amb:#f59e0b;--amb100:#fef3c7;--s900:#0f172a;--s700:#334155;--s400:#94a3b8;--s200:#e2e8f0;--s50:#f8fafc;--white:#fff;--sw:256px;--r:10px;--font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--s50);color:var(--s900);min-height:100vh;display:flex}
+.sidebar{width:var(--sw);background:var(--g950);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .25s}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-icon{width:36px;height:36px;background:var(--g600);border-radius:8px;display:grid;place-items:center;font-size:18px}
+.sb-text strong{display:block;color:var(--white);font-size:14px;font-weight:700}
+.sb-text span{color:var(--g400);font-size:11px}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-lbl{padding:16px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--s400);text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;text-decoration:none;transition:background .15s;border:none;background:none;width:100%;cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.nav-item.active{background:var(--g800);color:var(--white);border-left:3px solid var(--amb);padding-left:17px}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--amb);color:var(--s900);font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;font-family:var(--mono)}
+.sb-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.u-av{width:34px;height:34px;background:var(--g600);border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--white)}
+.u-info strong{display:block;color:var(--white);font-size:13px}.u-info span{color:var(--s400);font-size:11px}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column}
+.header{height:64px;background:var(--white);border-bottom:1px solid var(--s200);display:flex;align-items:center;gap:16px;padding:0 28px;position:sticky;top:0;z-index:50}
+.btn-toggle{display:none;background:none;border:1px solid var(--s200);border-radius:6px;padding:6px 8px;cursor:pointer;font-size:18px;color:var(--s700)}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--s400)}
+.breadcrumb span:last-child{color:var(--s900);font-weight:600}
+.h-right{margin-left:auto}
+.content{flex:1;padding:28px}
+.pg-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.pg-sub{font-size:13.5px;color:var(--s400);margin-bottom:24px}
+/* Summary */
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.sum-card{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.sum-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.sum-lbl{font-size:12.5px;color:var(--s400);font-weight:500}
+.sum-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;font-size:17px}
+.ic-g{background:var(--g100)}.ic-a{background:var(--amb100)}.ic-b{background:#dbeafe}
+.sum-val{font-size:22px;font-weight:700;font-family:var(--mono);margin-bottom:4px}
+.sum-sub{font-size:12px;color:var(--s400)}
+/* Product Cards */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px}
+.prod-card{background:var(--white);border:1px solid var(--s200);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.07);transition:transform .2s,box-shadow .2s}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.prod-header{padding:20px;display:flex;align-items:center;gap:14px}
+.prod-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.prod-name{font-size:15px;font-weight:700}
+.prod-type{font-size:12px;color:var(--s400)}
+.prod-body{padding:0 20px 20px}
+.prod-rate{font-size:28px;font-weight:700;font-family:var(--mono);color:var(--g600);margin-bottom:4px}
+.prod-rate span{font-size:13px;color:var(--s400);font-family:var(--font);font-weight:400}
+.prod-desc{font-size:13px;color:var(--s400);margin-bottom:16px;line-height:1.6}
+.prod-stats{display:flex;gap:16px;padding:14px 0;border-top:1px solid var(--s200);border-bottom:1px solid var(--s200);margin-bottom:16px}
+.prod-stat{flex:1;text-align:center}
+.prod-stat strong{display:block;font-size:14px;font-weight:700;font-family:var(--mono)}
+.prod-stat span{font-size:11px;color:var(--s400)}
+.prod-actions{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-p{background:var(--g600);color:var(--white)}
+.btn-o{background:var(--white);border:1px solid var(--s200);color:var(--s700)}
+.btn-danger{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-full{width:100%;justify-content:center}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.bg-g{background:var(--g100);color:var(--g800)}.bg-a{background:var(--amb100);color:#92400e}
+/* Table */
+.card{background:var(--white);border:1px solid var(--s200);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--s200)}
+.card-title{font-size:14px;font-weight:700}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--s400);border-bottom:1px solid var(--s200);background:var(--s50);text-transform:uppercase;letter-spacing:.04em}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--s200);color:var(--s700)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--s50)}
+/* Modal */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--white);border-radius:12px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--s200)}
+.modal-title{font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--s400)}
+.modal-body{padding:24px;display:flex;flex-direction:column;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12.5px;font-weight:600;color:var(--s700)}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1.5px solid var(--s200);border-radius:8px;font-family:var(--font);font-size:13px;outline:none;transition:border .15s}
+.form-group input:focus,.form-group select:focus{border-color:var(--g600)}
+.modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--s200)}
+.footer{padding:16px 28px;border-top:1px solid var(--s200);background:var(--white);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--s400)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+@media(max-width:1100px){.prod-grid{grid-template-columns:repeat(2,1fr)}.sum-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.btn-toggle{display:flex}.content{padding:16px}.prod-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<!-- Modal -->
+<div class="modal-backdrop" id="modalForm">
+  <div class="modal">
+    <div class="modal-hdr"><span class="modal-title" id="modalTitle">Tambah Produk Simpanan</span><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Nama Produk</label><input type="text" id="fNama" placeholder="Contoh: Simpanan Pokok"/></div>
+      <div class="form-group"><label>Jenis Simpanan</label>
+        <select id="fJenis"><option>Pokok</option><option>Wajib</option><option>Sukarela</option></select>
+      </div>
+      <div class="form-group"><label>Bunga/Tahun (%)</label><input type="number" id="fBunga" placeholder="Contoh: 4.5" step="0.1"/></div>
+      <div class="form-group"><label>Setoran Minimum (Rp)</label><input type="number" id="fMin" placeholder="Contoh: 50000"/></div>
+      <div class="form-group"><label>Deskripsi</label><textarea id="fDesc" rows="3" placeholder="Keterangan produk simpanan..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-o" onclick="closeModal()">Batal</button>
+      <button class="btn btn-p" onclick="saveProduk()">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-icon">🌾</div><div class="sb-text"><strong>Maju Makmur</strong><span>Koperasi Simpan Pinjam</span></div></div>
+  <nav class="sb-nav">
+    <div class="nav-lbl">Utama</div>
+    <a class="nav-item" href="dashboard.html"><span class="nav-icon">📊</span>Dashboard</a>
+    <div class="nav-lbl">Data Master</div>
+    <a class="nav-item" href="data-master-anggota.html"><span class="nav-icon">👥</span>Data Anggota</a>
+    <a class="nav-item active" href="produk-simpanan.html"><span class="nav-icon">💰</span>Produk Simpanan</a>
+    <a class="nav-item" href="produk-pinjaman.html"><span class="nav-icon">📋</span>Produk Pinjaman</a>
+    <div class="nav-lbl">Transaksi</div>
+    <a class="nav-item" href="form.html"><span class="nav-icon">📝</span>Pengajuan Pinjaman<span class="nav-badge">5</span></a>
+    <div class="nav-lbl">Laporan</div>
+    <a class="nav-item" href="laporan.html"><span class="nav-icon">📄</span>Kartu Angsuran</a>
+  </nav>
+  <div class="sb-user"><div class="u-av">BH</div><div class="u-info"><strong>Bpk. Hendra</strong><span>Bendahara</span></div></div>
+</aside>
+<div class="main">
+  <header class="header">
+    <button class="btn-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb"><span>KSP Maju Makmur</span><span>›</span><span>Data Master</span><span>›</span><span>Produk Simpanan</span></div>
+    <div class="h-right"><button class="btn btn-p" onclick="openModal()">+ Tambah Produk</button></div>
+  </header>
+  <main class="content">
+    <div class="pg-title">Produk Simpanan</div>
+    <div class="pg-sub">Kelola jenis-jenis simpanan yang tersedia di KSP Maju Makmur.</div>
+    <div class="sum-grid">
+      <div class="sum-card"><div class="sum-top"><span class="sum-lbl">Total Dana Simpanan</span><div class="sum-icon ic-g">🏦</div></div><div class="sum-val">Rp 847 Jt</div><div class="sum-sub">dari 412 anggota aktif</div></div>
+      <div class="sum-card"><div class="sum-top"><span class="sum-lbl">Simpanan Pokok</span><div class="sum-icon ic-a">💵</div></div><div class="sum-val">Rp 206 Jt</div><div class="sum-sub">412 anggota × Rp 500.000</div></div>
+      <div class="sum-card"><div class="sum-top"><span class="sum-lbl">Simpanan Wajib</span><div class="sum-icon ic-b">📅</div></div><div class="sum-val">Rp 371 Jt</div><div class="sum-sub">Rata-rata Rp 75.000/bulan</div></div>
+    </div>
+    <div class="prod-grid" id="prodGrid"></div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">Riwayat Setoran Simpanan Terbaru</span></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Tgl Setor</th><th>No. Anggota</th><th>Nama</th><th>Jenis</th><th>Nominal</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>21 Sep 2026</td><td style="font-family:var(--mono);font-size:12px">KSP-2025-003</td><td>Budi Santoso</td><td>Wajib</td><td style="font-family:var(--mono)">Rp 200.000</td><td><span class="badge bg-g">Verified</span></td></tr>
+            <tr><td>20 Sep 2026</td><td style="font-family:var(--mono);font-size:12px">KSP-2025-001</td><td>Ahmad Dahlan</td><td>Sukarela</td><td style="font-family:var(--mono)">Rp 500.000</td><td><span class="badge bg-g">Verified</span></td></tr>
+            <tr><td>19 Sep 2026</td><td style="font-family:var(--mono);font-size:12px">KSP-2025-005</td><td>Rudi Hartono</td><td>Wajib</td><td style="font-family:var(--mono)">Rp 200.000</td><td><span class="badge bg-a">Pending</span></td></tr>
+            <tr><td>18 Sep 2026</td><td style="font-family:var(--mono);font-size:12px">KSP-2025-006</td><td>Sri Wahyuni</td><td>Pokok</td><td style="font-family:var(--mono)">Rp 500.000</td><td><span class="badge bg-g">Verified</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><span>© 2026 KSP Maju Makmur</span><span>Produk Simpanan · Client-Side Programming</span></footer>
+</div>
+<script>
+let produk=[
+  {id:1,nama:'Simpanan Pokok',jenis:'Pokok',bunga:0,min:500000,anggota:412,total:'Rp 206 Jt',desc:'Dibayar satu kali saat pertama menjadi anggota. Besaran ditentukan dalam Anggaran Dasar koperasi.',icon:'🏛️',color:'#dcfce7'},
+  {id:2,nama:'Simpanan Wajib',jenis:'Wajib',bunga:0,min:75000,anggota:412,total:'Rp 371 Jt',desc:'Dibayar setiap bulan oleh seluruh anggota aktif. Besaran sesuai keputusan RAT.',icon:'📅',color:'#dbeafe'},
+  {id:3,nama:'Simpanan Sukarela',jenis:'Sukarela',bunga:4.5,min:50000,anggota:287,total:'Rp 270 Jt',desc:'Dapat disetor dan ditarik kapan saja. Mendapat bagi hasil/bunga sesuai ketentuan koperasi.',icon:'💰',color:'#fef3c7'},
+];
+let nextId=4;
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function renderProduk(){
+  const grid=document.getElementById('prodGrid');
+  grid.innerHTML=produk.map(p=>`
+    <div class="prod-card">
+      <div class="prod-header">
+        <div class="prod-icon" style="background:${p.color}">${p.icon}</div>
+        <div><div class="prod-name">${p.nama}</div><div class="prod-type">Simpanan ${p.jenis}</div></div>
+      </div>
+      <div class="prod-body">
+        <div class="prod-rate">${p.bunga>0?p.bunga+'%':'0%'} <span>${p.bunga>0?'bunga/tahun':'(tanpa bunga)'}</span></div>
+        <div class="prod-desc">${p.desc}</div>
+        <div class="prod-stats">
+          <div class="prod-stat"><strong>${p.anggota}</strong><span>Anggota</span></div>
+          <div class="prod-stat"><strong>${p.total}</strong><span>Total Dana</span></div>
+          <div class="prod-stat"><strong>Rp ${p.min.toLocaleString('id-ID')}</strong><span>Min. Setor</span></div>
+        </div>
+        <div class="prod-actions">
+          <button class="btn btn-o btn-sm btn-full" onclick="editProduk(${p.id})">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="hapusProduk(${p.id})">🗑️</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function openModal(id=null){
+  document.getElementById('modalTitle').textContent=id?'Edit Produk Simpanan':'Tambah Produk Simpanan';
+  document.getElementById('fNama').value='';document.getElementById('fBunga').value='';document.getElementById('fMin').value='';document.getElementById('fDesc').value='';
+  if(id){const p=produk.find(x=>x.id===id);document.getElementById('fNama').value=p.nama;document.getElementById('fJenis').value=p.jenis;document.getElementById('fBunga').value=p.bunga;document.getElementById('fMin').value=p.min;document.getElementById('fDesc').value=p.desc;}
+  document.getElementById('modalForm').dataset.editId=id||'';
+  document.getElementById('modalForm').classList.add('open');
+}
+function editProduk(id){openModal(id)}
+function closeModal(){document.getElementById('modalForm').classList.remove('open')}
+function saveProduk(){
+  const id=document.getElementById('modalForm').dataset.editId;
+  const data={nama:document.getElementById('fNama').value,jenis:document.getElementById('fJenis').value,bunga:parseFloat(document.getElementById('fBunga').value)||0,min:parseInt(document.getElementById('fMin').value)||0,desc:document.getElementById('fDesc').value,icon:'💰',color:'#f0fdf4',anggota:0,total:'Rp 0'};
+  if(!data.nama){alert('Nama produk wajib diisi!');return;}
+  if(id){const idx=produk.findIndex(x=>x.id===parseInt(id));produk[idx]={...produk[idx],...data};}
+  else{produk.push({id:nextId++,...data});}
+  closeModal();renderProduk();
+}
+function hapusProduk(id){if(confirm('Hapus produk ini?')){produk=produk.filter(p=>p.id!==id);renderProduk();}}
+renderProduk();
+</script>
+</body></html>
